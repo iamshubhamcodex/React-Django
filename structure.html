@@ -1,0 +1,120 @@
+﻿<html lang="en-GB"><head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Django React Setup - Best Project Structure - Django Tutorial</title>
+<link rel="stylesheet" id="bones-stylesheet-css" href="https://studygyaan.com/wp-content/themes/Bones%20-%20StudyGyaan%20v.%202.0-%20Wordpress%20Ready.zip/library/css/style.css" type="text/css" media="all" as="style" onload="this.onload=null;this.rel='stylesheet'">
+</head>
+<body data-rsssl="1" class="post-template-default single single-post postid-4850 single-format-standard wp-custom-logo" itemscope="" itemtype="http://schema.org/WebPage" style="transform: none;">
+<div id="container" style="transform: none;">
+<div id="content" style="transform: none;">
+<div id="inner-content" class="wrap cf" style="transform: none;">
+<main id="main" class="m-all t-2of3 d-5of7 cf" role="main" itemscope="" itemprop="mainContentOfPage" itemtype="http://schema.org/Blog" style="
+    width: 100%;
+">
+<article id="post-4850" class="cf post-4850 post type-post status-publish format-standard hentry category-django tag-django-reactjs tag-django-tutorial" role="article" itemscope="" itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
+<header class="article-header entry-header">
+<h1 class="entry-title single-title" itemprop="headline" rel="bookmark">Django React Setup – Best Project Structure</h1>
+</header>
+<section class="entry-content cf" itemprop="articleBody">
+<p>Learn the best way to setup your Django and ReactJS Project by following best folder structure practice. We will use Django Rest Framework with ReactJS with to create interactive beautiful dynamic website. This is best Folder structure for React and Django REST.</p>
+
+<h2>Django + ReactJS Project Setup</h2>
+<h3>Django and Django Rest Framework Setup</h3>
+<p>We will keep all our project files in one folder, so create folder and change directory to that folder. E.g – folder name : <code>django-react</code> </p>
+<pre class="wp-block-preformatted">mkdir django-react
+cd django-react</pre>
+<p>Now lets create virtual environment in that folder – <a rel="noreferrer noopener" href="https://studygyaan.com/django/multiple-django-projects-using-one-virtualenv-environment" target="_blank">virtualenv</a> and activate it.<span id="ezoic-pub-ad-placeholder-139" class="ezoic-adpicker-ad"></span></p>
+<pre class="wp-block-preformatted">virtualenv env
+. .\env\Scripts\activate</pre>
+<p>Install Django, <a rel="noreferrer noopener" href="https://www.django-rest-framework.org/" target="_blank">Django Rest Framework</a> in our virtualenv.<span id="ezoic-pub-ad-placeholder-140" class="ezoic-adpicker-ad"></span></p>
+<pre class="wp-block-preformatted">pip install django djangorestframework</pre>
+<p>Now its time to create our django project.</p>
+<pre class="wp-block-preformatted">django-admin startproject myproject</pre>
+<p>Change the outer name of your django project <strong><code>myproject</code> </strong> to <code><strong>backend</strong></code> and change directory.<span id="ezoic-pub-ad-placeholder-141" class="ezoic-adpicker-ad"></span></p>
+<pre class="wp-block-preformatted">cd backend</pre>
+<p>Once project is been created, now create a app with name <code>frontend</code> for serving our front-end react services.</p>
+<pre class="wp-block-preformatted">django-admin startapp frontend</pre>
+<p>Its time to configurations. Open with project with editor.</p>
+<p>In <code>settings.py</code> file, add following under <code>INSTALLED_APPS</code>.</p>
+<pre class="wp-block-preformatted">INSTALLED_APPS&nbsp;=&nbsp;[
+&nbsp;&nbsp;   
+&nbsp;&nbsp;&nbsp;&nbsp;<strong>'rest_framework',
+&nbsp;&nbsp;&nbsp;&nbsp;'frontend',</strong>
+]</pre>
+<p>In <code>urls.py</code> file add following code.</p>
+<pre class="wp-block-preformatted">from&nbsp;django.contrib&nbsp;import&nbsp;admin
+from&nbsp;django.urls&nbsp;import&nbsp;path,<strong>include</strong>
+
+urlpatterns&nbsp;=&nbsp;[
+&nbsp;&nbsp;&nbsp;&nbsp;path('admin/',&nbsp;admin.site.urls),
+&nbsp;&nbsp;&nbsp;&nbsp;<strong>path('',&nbsp;include('frontend.urls')),</strong>
+]</pre>
+<p>Now create <code>urls.py</code> file in frontend app and add the following code inside it.</p>
+<pre class="wp-block-preformatted">from&nbsp;django.urls&nbsp;import&nbsp;path
+from&nbsp;.&nbsp;import&nbsp;views
+
+urlpatterns&nbsp;=&nbsp;[
+&nbsp;&nbsp;&nbsp;&nbsp;path('',&nbsp;views.index)
+]</pre>
+<p>Last in <code>views.py</code> of <code>frontend</code> app, add following code.</p>
+<pre class="wp-block-preformatted">from&nbsp;django.shortcuts&nbsp;import&nbsp;render
+
+def&nbsp;index(request):
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;render(request,&nbsp;'build/index.html')</pre>
+<p><span id="ezoic-pub-ad-placeholder-146" class="ezoic-adpicker-ad"></span>So basically we are point to <code>build/index.html</code> of our reactjs project, which we are going to create soon.</p>
+<p>Runserver and see if any error occurs.</p>
+<pre class="wp-block-preformatted">python manage.py runserver</pre>
+<h3>React Project Setup for Django </h3>
+<p>Open a new terminal, change directory to <code>django-react</code>.</p>
+<p>For installing react js apps, you need <a rel="noreferrer noopener" href="https://nodejs.org/en/" target="_blank">node.js</a>.</p>
+<p>For creating react app, type the following command in your terminal.</p>
+<pre class="wp-block-preformatted">npx create-react-app frontend</pre>
+<p>The above command will create a react app with name <code>frontend</code>.</p>
+<p>Change directory to frontend.</p>
+<pre class="wp-block-preformatted">cd frontend</pre>
+<p>Now run the build of react app.</p>
+<pre class="wp-block-preformatted">npm run build</pre>
+<h3>Finalizing Django Setup for React App </h3>
+<p>In <code>settings.py</code> file, add to <code>TEMPLATES</code> <code>DIR</code>.</p>
+<pre class="wp-block-preformatted">TEMPLATES&nbsp;=&nbsp;[
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'BACKEND':&nbsp;'django.template.backends.django.DjangoTemplates',
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'DIRS':&nbsp;[<strong>os.path.join(BASE_DIR,&nbsp;'../frontend')</strong>],
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'APP_DIRS':&nbsp;True,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'OPTIONS':&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'context_processors':&nbsp;[
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'django.template.context_processors.debug',
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'django.template.context_processors.request',
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'django.contrib.auth.context_processors.auth',
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'django.contrib.messages.context_processors.messages',
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;],
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},
+&nbsp;&nbsp;&nbsp;&nbsp;},
+]</pre>
+<p>And at last of <code>settings.py</code> file add following code for serving static files.</p>
+<pre class="wp-block-preformatted">STATICFILES_DIRS&nbsp;=&nbsp;[
+&nbsp;&nbsp;&nbsp;&nbsp;os.path.join(BASE_DIR,&nbsp;'../frontend/build/static'),
+]</pre>
+<p>Done!!!</p>
+<p>Now just the Python Server and go to <a href="http://localhost:8000/">http://localhost:8000/</a>.</p>
+<pre class="wp-block-preformatted">python manage.py runserver</pre>
+<p><strong>Note </strong>– We are using two terminals for our project. One for Django and another for ReactJS.</p>
+<p>This is the best way to organize your Django + React Project for better coding experience.</p>
+
+</section>
+
+
+
+</article>
+
+
+
+</main>
+
+</div>
+</div>
+
+</div>
+
+
+</body></html>
